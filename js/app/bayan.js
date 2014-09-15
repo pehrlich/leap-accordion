@@ -16,6 +16,16 @@ function (teoria, sc, KeyboardJS, T, createjs, Synth, Key) {
    '0':38, 'p':27,  ';':28, '/':29,
    '-':41, '[':30,  '\'':31};
 
+
+  var LAYOUT_BL_REVERSE = {};
+
+  for (var prop in LAYOUT_BL) {
+    if(LAYOUT_BL.hasOwnProperty(prop)) {
+      LAYOUT_BL_REVERSE[LAYOUT_BL[prop]] = prop;
+    }
+  }
+
+
   var QWERTY =
   [['2','3','4','5','6','7','8','9','0','-'],
    ['q','w','e','r','t','y','u','i','o','p','['],
@@ -55,6 +65,19 @@ function (teoria, sc, KeyboardJS, T, createjs, Synth, Key) {
     }
     midiNumber = midiNumber + this.octave*12;
     return midiNumber;
+  }
+
+  // As noteNum is the only identifying characteristic of a key stored on a gen in the gen list by Timbre,
+  // we reverse it to get the key pressed.
+  Bayan.prototype.keyForMidiNumber = function(midiNumber) {
+    var key;
+    midiNumber = midiNumber - this.octave*12;
+
+    key = LAYOUT_BL_REVERSE[midiNumber];
+
+    console.assert(key); // no rounding errors
+
+    return this.keyboard[key];
   }
 
 
@@ -102,7 +125,6 @@ function (teoria, sc, KeyboardJS, T, createjs, Synth, Key) {
 
       var note = teoria.note.fromMIDI(midiNumber);
       var freq = sc.Scale.chromatic("equal").degreeToFreq(midiNumber, (0).midicps(), self.octave);
-      console.log(midiNumber + note.toString() + " " + freq);
 
       self.synth.noteOn(midiNumber);
       self.keyboard[k].keyDown();

@@ -24,6 +24,7 @@ function (Bayan) {
   var context = canvas.getContext('2d');
   var textArea = document.getElementById('bayan-textarea');
   var bayan = new Bayan(canvas, textArea);
+  window.app = bayan;
 
   window.addEventListener('resize', onResize, false);
   onResize();

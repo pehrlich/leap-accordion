@@ -64,6 +64,12 @@ function(T) {
 
   }
 
+  Synth.prototype.mute = function(){
+    for (midiNote in this.oscillators){
+      this.oscillators[midiNote].setGain(0);
+    }
+  }
+
 
   Synth.prototype.noteOn = function(midiNumber) {
     var oscillator = this.oscillators[midiNumber];
