@@ -11141,6 +11141,11 @@
             list.push(gen);
             dict[noteNum] = opts.gen = gen;
 
+            // in this massive hack, we expose the list of current notes from Timbre.
+            // There's probably a way to avoid this by creating the notes first with T, and then mutating them..
+            // But I don't know it.
+            window.list = list;
+
             this.playbackState = fn.PLAYING_STATE;
 
             if (list.length > _.poly) {
