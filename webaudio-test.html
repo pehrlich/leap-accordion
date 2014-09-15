@@ -36,6 +36,10 @@
       this.oscillator.frequency.value = val;
     };
 
+    OscillatorSample.prototype.changeNote = function(midiNote) {
+      this.changeFrequency(Math.pow(2, (midiNote - 69) / 12) * 440.0);
+    };
+
     OscillatorSample.prototype.changeDetune = function(val) {
       this.oscillator.detune.value = val;
     };
@@ -47,9 +51,12 @@
     context = new (window.AudioContext || window.webkitAudioContext)();
 
 
-    var sample = new OscillatorSample();
-    sample.toggle();
+    var oscillator = new OscillatorSample();
 
+
+    oscillator.toggle();
+
+    oscillator.changeNote(48);
 
 
     var i = 0;
@@ -58,7 +65,7 @@
         i++;
         var gain = (Math.sin(i / Math.PI / 2) );
 
-        sample.gainNode.gain.value = gain;
+        oscillator.gainNode.gain.value = gain;
 
     }, 16)
 
