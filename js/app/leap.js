@@ -77,6 +77,7 @@ Leap.plugin('palmPointVelocity', function(scope){
 
         var V_relative = Leap.vec3.create();
         var V_point = Leap.vec3.create();
+        var V_hand = Leap.vec3.create();
 
         Leap.vec3.sub(
           V_relative,                          // out
@@ -90,11 +91,15 @@ Leap.plugin('palmPointVelocity', function(scope){
           point     // b
         );
 
+        // only take Y (up-down) motion
+        V_hand = [0, this.palmVelocity[1], 0]
+
         Leap.vec3.add(
           V_point,
-          this.palmVelocity,
+          V_hand,
           V_relative
         );
+
 
         return V_point;
       },
@@ -106,7 +111,6 @@ Leap.plugin('palmPointVelocity', function(scope){
           'speedAtPoint',
             Leap.vec3.length(
               this.velocityAtPoint(point)
-//              this.palmVelocity
             )
           );
       },
