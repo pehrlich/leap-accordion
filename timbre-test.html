@@ -1,0 +1,60 @@
+<html>
+<head>
+  <script src="js/lib/timbre.js"></script>
+  <script>
+    function Synth() {
+      this.synthDef = T("SynthDef").play();
+      this.synthDef.def = function(opts) {
+        console.log('synthDef', opts.mul);
+        // voltage controlled oscillator
+        // triangle wave
+        var VCO = T("tri", {freq: opts.freq});
+
+        var eq = T("eq", {
+          params: {}
+        }, VCO);
+
+        var EG  = T("adsr", {});
+        var VCA = EG.append(eq);
+
+        return VCA;
+      };
+    }
+
+    Synth.prototype.noteOn = function(midiNumber) {
+      this.synthDef.noteOn(midiNumber);
+    }
+
+    Synth.prototype.noteOff = function(midiNumber) {
+      this.synthDef.noteOff(midiNumber);
+    }
+
+    var synth = new Synth();
+
+    synth.noteOn(48);
+
+    // At middle C (midi note 72, 0.523 Cycles/ms)
+    // 16ms = 8.4 cycles, thus the click
+    // to fix - only change volume at 8.4ms increments?
+    // - or -
+    // use web audio api?
+    // setTimeout is notoriously unreliable
+    // better the latter.
+
+    var i = 0;
+    setInterval(
+      function(){
+        i++;
+        var vol = (950 * Math.sin(i / Math.PI / 2) );
+        list[0].set({
+          mul: 1000 * vol
+        })
+    }, 16)
+
+  </script>
+</head>
+<body>
+
+
+</body>
+</html>

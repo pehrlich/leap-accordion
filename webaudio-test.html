@@ -1,0 +1,72 @@
+<html>
+<head>
+  <script src="js/lib/asdr.js"></script>
+
+  <script>
+
+    function OscillatorSample() {
+      this.isPlaying = false;
+    }
+
+    OscillatorSample.prototype.play = function() {
+      this.oscillator = context.createOscillator();
+
+      this.gainNode = context.createGain();
+
+      this.gainNode.gain.value = 0.1;
+
+      this.oscillator.connect(this.gainNode);
+
+      this.gainNode.connect(context.destination);
+
+      this.oscillator[this.oscillator.start ? 'start' : 'noteOn'](0);
+    };
+
+    OscillatorSample.prototype.stop = function() {
+      this.oscillator.stop(0);
+    };
+
+    OscillatorSample.prototype.toggle = function() {
+      (this.isPlaying ? this.stop() : this.play());
+      this.isPlaying = !this.isPlaying;
+
+    };
+
+    OscillatorSample.prototype.changeFrequency = function(val) {
+      this.oscillator.frequency.value = val;
+    };
+
+    OscillatorSample.prototype.changeDetune = function(val) {
+      this.oscillator.detune.value = val;
+    };
+
+    OscillatorSample.prototype.changeType = function(type) {
+      this.oscillator.type = type;
+    };
+
+    context = new (window.AudioContext || window.webkitAudioContext)();
+
+
+    var sample = new OscillatorSample();
+    sample.toggle();
+
+
+
+    var i = 0;
+    setInterval(
+      function(){
+        i++;
+        var gain = (Math.sin(i / Math.PI / 2) );
+
+        sample.gainNode.gain.value = gain;
+
+    }, 16)
+
+
+  </script>
+</head>
+<body>
+
+
+</body>
+</html>
