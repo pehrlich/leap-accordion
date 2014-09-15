@@ -1,30 +1,76 @@
 define(['lib/timbre'],
 function(T) {
 
-  var synthDef;
+  function Oscillator(context, midiNumber) {
+    this.oscillator = context.createOscillator();
 
-  function Synth() {
-    this.synthDef = T("SynthDef").play();
-    this.synthDef.def = function(opts) {
-      var VCO = T("tri", {freq:opts.freq});
+    this.gainNode = context.createGain();
 
-      var eq = T("eq", {
-        params:{lpf:[700,0,-24]}
-      }, VCO);
+    this.oscillator.connect(this.gainNode);
 
-      var EG  = T("adsr", {a:15, d:0, s:0.1, r:0.1, lv:0.1});
-      var VCA = EG.append(eq).bang();
+    this.gainNode.connect(context.destination);
 
-      return VCA;
-    };
+    this.changeNote(midiNumber);
+    this.play();
   }
 
+  Oscillator.prototype.play = function() {
+    this.oscillator[this.oscillator.start ? 'start' : 'noteOn'](0);
+  };
+
+  Oscillator.prototype.stop = function() {
+    this.oscillator.stop(0);
+  };
+
+  Oscillator.prototype.setGain = function(gain) {
+    this.gainNode.gain.value = gain;
+  };
+
+
+  Oscillator.prototype.changeFrequency = function(val) {
+    this.oscillator.frequency.value = val;
+  };
+
+  Oscillator.prototype.changeNote = function(midiNote) {
+    this.changeFrequency(Math.pow(2, (midiNote - 69) / 12) * 440.0);
+  };
+
+  Oscillator.prototype.changeDetune = function(val) {
+    this.oscillator.detune.value = val;
+  };
+
+  Oscillator.prototype.changeType = function(type) {
+    this.oscillator.type = type;
+  };
+
+  function Synth(){
+
+    this.context = new (window.AudioContext || window.webkitAudioContext)();
+
+    // each oscillator is one-time-use only.
+    // we modify the gain instead of stopping entirely.
+    this.oscillators = {};
+
+  }
+
+
   Synth.prototype.noteOn = function(midiNumber) {
-    this.synthDef.noteOn(midiNumber);
+    var oscillator = this.oscillators[midiNumber];
+
+    if (!oscillator){
+      oscillator = this.oscillators[midiNumber] = new Oscillator(this.context, midiNumber)
+    }
+
+    oscillator.setGain(1)
+
   }
 
   Synth.prototype.noteOff = function(midiNumber) {
-    this.synthDef.noteOff(midiNumber);
+    var oscillator = this.oscillators[midiNumber];
+
+    console.assert(oscillator);
+
+    oscillator.setGain(0)
   }
 
   return Synth;

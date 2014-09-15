@@ -11,9 +11,6 @@ requirejs.config({
     'lib/subcollider' : {
       exports: 'sc'
     },
-    'lib/timbre' : {
-      exports: 'T'
-    },
     'lib/easeljs' : {
       exports: 'createjs'
     }
