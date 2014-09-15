@@ -2,6 +2,8 @@ define(['lib/timbre'],
 function(T) {
 
   function Oscillator(context, midiNumber) {
+    this.isPlaying = false;
+
     this.oscillator = context.createOscillator();
 
     this.gainNode = context.createGain();
@@ -11,11 +13,20 @@ function(T) {
     this.gainNode.connect(context.destination);
 
     this.changeNote(midiNumber);
-    this.play();
+
+    this.oscillator[this.oscillator.start ? 'start' : 'noteOn'](0);
+
+    this.setGain(0);
   }
 
   Oscillator.prototype.play = function() {
-    this.oscillator[this.oscillator.start ? 'start' : 'noteOn'](0);
+    this.setGain(1);
+    this.isPlaying = true;
+  };
+
+  Oscillator.prototype.mute = function() {
+    this.setGain(0);
+    this.isPlaying = false;
   };
 
   Oscillator.prototype.stop = function() {
@@ -61,7 +72,7 @@ function(T) {
       oscillator = this.oscillators[midiNumber] = new Oscillator(this.context, midiNumber)
     }
 
-    oscillator.setGain(1)
+    oscillator.play()
 
   }
 
@@ -70,8 +81,10 @@ function(T) {
 
     console.assert(oscillator);
 
-    oscillator.setGain(0)
+    oscillator.mute()
   }
+
+
 
   return Synth;
 });
