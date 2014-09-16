@@ -183,8 +183,8 @@ Leap.loop({
     }
 
     var oscillator, midiNote, key;
-    for (midiNote in app.synth.oscillators){
-      oscillator = app.synth.oscillators[midiNote];
+    for (midiNote in app.synth.reeds){
+      oscillator = app.synth.reeds[midiNote];
 
       if (oscillator.isPlaying){
 
