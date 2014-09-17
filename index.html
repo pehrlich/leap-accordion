@@ -17,18 +17,39 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/three.js/r68/three.min.js"></script>
   <script src="//js.leapmotion.com/leap-0.6.2.min.js"></script>
   <script src="//js.leapmotion.com/leap-plugins-0.1.6.1.min.js"></script>
+  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 
   <script src="js/app/console.js"></script>
   <script src="js/lib/LeapDataPlotter.js"></script>
-  <script src="js/app/leap.js"></script>
   <script data-main="js/app" src="js/require.js"></script>
 
 </head>
 <body onload="onload();">
+
   <canvas id="bayan"></canvas>
   <textarea id="bayan-textarea" rows="3"></textarea>
   <a href="/bayan/about.html">about</a> &nbsp <a href="https://twitter.com/benzguo" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @benzguo</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+  <h3>Select <a href="http://en.wikipedia.org/wiki/Accordion_reed_ranks_and_switches">Reed Bank</a></h3>
+
+  <ul>
+    <li>
+      <input type="checkbox" id="four_foot_input" disabled>
+      <label for="four_foot_input">4' stop</label>
+    </li>
+    <li>
+      <input type="checkbox" id="eight_foot_input" checked="checked" class="active">
+      <label for="eight_foot_input">8' stop</label>
+    </li>
+    <li>
+      <input type="checkbox" id="sixteen_foot_input" disabled>
+      <label for="sixteen_foot_input">16' stop</label>
+    </li>
+  </ul>
+
+
+
   <br>
 
 </body>

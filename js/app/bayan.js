@@ -1,29 +1,5 @@
-define(['lib/teoria', 'lib/subcollider', 'lib/keyboard', 'lib/timbre', 'lib/easeljs', 'app/synth', 'app/key'],
-function (teoria, sc, KeyboardJS, T, createjs, Synth, Key) {
-
-  // mappings from qwerty key names ('q') to midi notes (0)
-  // Bayan, left to right
-  var LAYOUT_BL =
-  {'q':0,  'a':1,   'z':2,
-   '2':14, 'w':3,   's':4,  'x':5,
-   '3':17, 'e':6,   'd':7,  'c':8,
-   '4':20, 'r':9,   'f':10, 'v':11,
-   '5':23, 't':12,  'g':13, 'b':14,
-   '6':26, 'y':15,  'h':16, 'n':17,
-   '7':29, 'u':18,  'j':19, 'm':20,
-   '8':32, 'i':21,  'k':22, ',':23,
-   '9':35, 'o':24,  'l':25, '.':26,
-   '0':38, 'p':27,  ';':28, '/':29,
-   '-':41, '[':30,  '\'':31};
-
-
-  var LAYOUT_BL_REVERSE = {};
-
-  for (var prop in LAYOUT_BL) {
-    if(LAYOUT_BL.hasOwnProperty(prop)) {
-      LAYOUT_BL_REVERSE[LAYOUT_BL[prop]] = prop;
-    }
-  }
+define(['lib/teoria', 'lib/subcollider', 'lib/keyboard', 'lib/easeljs', 'app/chromatic-keyboard', 'app/key', 'app/layout'],
+function (teoria, sc, KeyboardJS, createjs, ChromaticKeyboard, Key, LAYOUT_BL) {
 
 
   var QWERTY =
@@ -38,11 +14,10 @@ function (teoria, sc, KeyboardJS, T, createjs, Synth, Key) {
     this.lastKeyUp = 'backspace';
     this.canvas = canvas;
     this.textArea = textArea;
-    this.octave = 5;
-    this.layout = LAYOUT_BL;
     this.stage = new createjs.Stage(canvas);
+    this.layout = LAYOUT_BL;
     this.keyboard = {};
-    this.synth = new Synth();
+    this.synth = new ChromaticKeyboard();
     this.origWidth = window.innerWidth;
     this.origHeight = window.innerHeight * 0.5;
     this.createKeyboard();
@@ -57,36 +32,15 @@ function (teoria, sc, KeyboardJS, T, createjs, Synth, Key) {
   }
 
 
-  // Instance methods
-  Bayan.prototype.midiNumberForKey = function(k) {
-    var midiNumber = this.layout[k];
-    if (midiNumber === undefined) {
-      return -1;
-    }
-    midiNumber = midiNumber + this.octave*12;
-    return midiNumber;
-  }
-
-  // As noteNum is the only identifying characteristic of a key stored on a gen in the gen list by Timbre,
-  // we reverse it to get the key pressed.
-  Bayan.prototype.keyForMidiNumber = function(midiNumber) {
-    var key;
-    midiNumber = midiNumber - this.octave*12;
-
-    key = LAYOUT_BL_REVERSE[midiNumber];
-
-    console.assert(key); // no rounding errors
-
-    return this.keyboard[key];
-  }
-
-
   Bayan.prototype.setupEventListeners = function() {
     // in an event handler, 'this' refers to the element the event originates from.
     // http://jibbering.com/faq/notes/closures
     var self = this;
     // Key down handler
     document.onkeydown = function(e) {
+
+      if ( e.metaKey == 1 ) return;
+
       e.preventDefault();
 
       var k = Bayan.keyForEvent(e);
@@ -123,10 +77,11 @@ function (teoria, sc, KeyboardJS, T, createjs, Synth, Key) {
       var midiNumber = self.midiNumberForKey(k);
       if (midiNumber < 0) return;
 
-      var note = teoria.note.fromMIDI(midiNumber);
-      var freq = sc.Scale.chromatic("equal").degreeToFreq(midiNumber, (0).midicps(), self.octave);
+// these look potentially interesting
+//      var note = teoria.note.fromMIDI(midiNumber);
+//      var freq = sc.Scale.chromatic("equal").degreeToFreq(midiNumber, (0).midicps(), self.octave);
 
-      self.synth.noteOn(midiNumber);
+      self.synth.keyDown(self.keyboard[k]);
       self.keyboard[k].keyDown();
     }
 
@@ -144,10 +99,19 @@ function (teoria, sc, KeyboardJS, T, createjs, Synth, Key) {
       var midiNumber = self.midiNumberForKey(k);
       if (midiNumber < 0) return;
 
-      self.synth.noteOff(midiNumber);
+      self.synth.keyUp(self.keyboard[k]);
       self.keyboard[k].keyUp();
     }
 
+  }
+
+  Bayan.prototype.midiNumberForKey = function(k) {
+    var midiNumber = this.layout[k];
+    if (midiNumber === undefined) {
+      return -1;
+    }
+    console.assert(!isNaN(midiNumber));
+    return midiNumber;
   }
 
   Bayan.prototype.createKeyboard = function () {
@@ -170,6 +134,7 @@ function (teoria, sc, KeyboardJS, T, createjs, Synth, Key) {
           default:
             break;
         }
+
         var key = new Key(c*(Key.width() + padding) + leftMargin + xOffset,
                           r*(Key.width() + padding),
                           this.midiNumberForKey(keyName),
@@ -187,7 +152,7 @@ function (teoria, sc, KeyboardJS, T, createjs, Synth, Key) {
 
           console.log(e.target.cursor);
           if (e.target.cursor === "up") {
-            self.synth.noteOn(midiNumber);
+            self.synth.keyDown(self.keyboard[keyName]);
             self.keyboard[keyName].keyDown();
             e.target.cursor = "down";
           }
@@ -199,7 +164,7 @@ function (teoria, sc, KeyboardJS, T, createjs, Synth, Key) {
           if (midiNumber < 0) return;
 
           if (e.target.cursor === "down") {
-            self.synth.noteOff(midiNumber);
+            self.synth.keyUp(self.keyboard[keyName]);
             self.keyboard[keyName].keyUp();
             e.target.cursor = "up";
           }
