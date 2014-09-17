@@ -9,3 +9,13 @@ input[disabled] + label {
 label.active {
   color: #81d41d;
 }
+
+ul {
+  list-style: none;
+}
+
+canvas.leap-boneHand {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

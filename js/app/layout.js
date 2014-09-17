@@ -2,8 +2,6 @@
 
 define([],
 function() {
-  console.log('creating layout. Hopefully this only happens once.');
-
   // mappings from qwerty key names ('q') to midi notes (0)
   // Bayan, left to right
   // for octave 5

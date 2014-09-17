@@ -1,10 +1,17 @@
 define([],
 function() {
 
+  var controller;
 
-  window.onload = function () {
-    window.plotter = new LeapDataPlotter();
-  }
+  // in case we remove jquery later?
+//  window.onload = function () {
+//    window.plotter = new LeapDataPlotter();
+//
+//    console.log('setting up via onoad');
+//    controller.use('boneHand', {
+//      targetEl: document.body
+//    })
+//  }
 
   Leap.plugin('palmPointVelocity', function (scope) {
     scope || (scope = {});
@@ -167,6 +174,19 @@ function() {
   });
 
 
-  return Leap.loop().use('palmPointVelocity');
+  controller = Leap.loop()
+    .use('palmPointVelocity');
+
+
+  $(function(){
+    window.plotter = new LeapDataPlotter();
+
+    console.log('setting up via onoad');
+    controller.use('boneHand', {
+      targetEl: document.body
+    })
+  });
+
+  return controller
 
 });
