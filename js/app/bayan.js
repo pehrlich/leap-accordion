@@ -24,6 +24,12 @@ function (teoria, sc, KeyboardJS, createjs, ChromaticKeyboard, Key, LAYOUT_BL, L
     this.setupEventListeners();
 
     this.hasRenderedFakeHand = false;
+
+    $('#auto_bellows').click(function(e){
+      e.preventDefault();
+      LeapController.plugins.playback.player.toggle();
+    });
+
   }
 
   // Class methods

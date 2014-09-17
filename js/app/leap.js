@@ -179,6 +179,15 @@ function() {
 
   controller = Leap.loop()
     .use('transform', {position: window.handTransformation } )
+    .use('playback',  {
+      overlay: false,
+      loop: true,
+      timeBetweenLoops: 0,
+      pauseOnHand: true,
+      autoPlay: false,
+      recording: {
+        url: 'recordings/bellows2-44fps.json.lz'
+      }})
     .use('palmPointVelocity');
 
   controller.on('ready', function(){
