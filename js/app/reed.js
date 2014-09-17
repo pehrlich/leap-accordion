@@ -1,4 +1,4 @@
-define(['app/audio-Context'],
+define(['app/audio-context'],
 function(Context) {
 
   function Reed(frequency) {
