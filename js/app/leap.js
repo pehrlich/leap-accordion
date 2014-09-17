@@ -13,6 +13,7 @@ function() {
 //    })
 //  }
 
+
   Leap.plugin('palmPointVelocity', function (scope) {
     scope || (scope = {});
 
@@ -174,14 +175,26 @@ function() {
   });
 
 
+  window.handTransformation = new THREE.Vector3(0,0,0);
+
   controller = Leap.loop()
+    .use('transform', {position: window.handTransformation } )
     .use('palmPointVelocity');
+
+  controller.on('ready', function(){
+
+    controller.connection.protocol.on('beforeFrameCreated', function(data){
+      if (data.hands[0]){
+//        console.log(JSON.stringify(data));
+      }
+    })
+  });
+
 
 
   $(function(){
     window.plotter = new LeapDataPlotter();
 
-    console.log('setting up via onoad');
     controller.use('boneHand', {
       targetEl: document.body
     })
