@@ -25,11 +25,6 @@ function (teoria, sc, KeyboardJS, createjs, ChromaticKeyboard, Key, LAYOUT_BL, L
 
     this.hasRenderedFakeHand = false;
 
-    $('#auto_bellows').click(function(e){
-      e.preventDefault();
-      LeapController.plugins.playback.player.toggle();
-    });
-
   }
 
   // Class methods
@@ -45,6 +40,18 @@ function (teoria, sc, KeyboardJS, createjs, ChromaticKeyboard, Key, LAYOUT_BL, L
     // http://jibbering.com/faq/notes/closures
     var self = this;
 
+
+    $('#auto_bellows').click(function(e){
+      e.preventDefault();
+      LeapController.plugins.playback.player.toggle();
+      if (LeapController.plugins.playback.player.state !== 'playing'){
+        console.log('clear hand');
+        setTimeout(function(){
+          // hax
+          self.emitFakeFrame(frameWithNoHands)
+        }, 100)
+      }
+    });
 
     // Key down handler
     document.onkeydown = function(e) {
