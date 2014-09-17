@@ -1,0 +1,11 @@
+input:not([disabled]), label {
+  cursor: pointer;
+}
+
+input[disabled] + label {
+  cursor: default;
+}
+
+label.active {
+  color: #81d41d;
+}

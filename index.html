@@ -23,6 +23,8 @@
   <script src="js/lib/LeapDataPlotter.js"></script>
   <script data-main="js/app" src="js/require.js"></script>
 
+  <link href="css/main.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body onload="onload();">
 
@@ -35,16 +37,16 @@
 
   <ul>
     <li>
-      <input type="checkbox" id="four_foot_input" disabled>
-      <label for="four_foot_input">4' stop</label>
+      <input type="checkbox" id="four_foot_input">
+      <label for="four_foot_input" id="four_foot_label">4' stop</label>
     </li>
     <li>
-      <input type="checkbox" id="eight_foot_input" checked="checked" class="active">
-      <label for="eight_foot_input">8' stop</label>
+      <input type="checkbox" id="eight_foot_input" checked="checked">
+      <label for="eight_foot_input" id="eight_foot_label" class="active">8' stop</label>
     </li>
     <li>
-      <input type="checkbox" id="sixteen_foot_input" disabled>
-      <label for="sixteen_foot_input">16' stop</label>
+      <input type="checkbox" id="sixteen_foot_input">
+      <label for="sixteen_foot_input" id="sixteen_foot_label">16' stop</label>
     </li>
   </ul>
 

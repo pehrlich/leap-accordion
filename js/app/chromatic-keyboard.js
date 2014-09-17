@@ -41,14 +41,37 @@ function(ReedBank, LeapController) {
     this.reedBanks[1].enable();
 
     $('#eight_foot_input').change( function(e){
-      console.log('change', arguments);
 
       if ( $(e.target).is(':checked') ){
         this.reedBanks[1].enable();
-        $('#eight_foot_input').addClass('active')
+        $('#eight_foot_label').addClass('active')
       } else{
         this.reedBanks[1].disable();
-        $('#eight_foot_input').removeClass('active')
+        $('#eight_foot_label').removeClass('active')
+      }
+
+    }.bind(this) );
+
+    $('#four_foot_input').change( function(e){
+
+      if ( $(e.target).is(':checked') ){
+        this.reedBanks[0].enable();
+        $('#four_foot_label').addClass('active')
+      } else{
+        this.reedBanks[0].disable();
+        $('#four_foot_label').removeClass('active')
+      }
+
+    }.bind(this) );
+
+    $('#sixteen_foot_input').change( function(e){
+
+      if ( $(e.target).is(':checked') ){
+        this.reedBanks[4].enable();
+        $('#sixteen_foot_label').addClass('active')
+      } else{
+        this.reedBanks[4].disable();
+        $('#sixteen_foot_label').removeClass('active')
       }
 
     }.bind(this) );
