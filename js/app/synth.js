@@ -1,12 +1,23 @@
-// Triangle wave
+// http://en.wikipedia.org/wiki/Accordion_reed_ranks_and_switches
+// This synth is for the treble side of a chromatic button accordion
+// Most accordions to this date typically have anywhere between 2-4 reed ranks on the treble side
+// These can usually be selected individually or combined in various ways to provide a range of different timbres, by use of switches arranged by register from high to low.
+//  More of the top-line expensive accordions may contain 5-6 reed blocks on the treble side for different tunings, typically found in accordions which stress musette sounds.
 
-// equalizer lpf 700,0,-24
+// select reeds, cool
+// but how about dynamic tremelo adjustment?
 
-// asdr 15,0,0.1,0.1
+// For the tremolo (8′), may I recommend the lower octave to be tuned to 441.5Hz,
+// and the upper octave to 440.5Hz. And 441Hz in the middle.
+// http://accordionknowhow.wordpress.com/what-to-tune-to/
 
-// something called bang
+// for wave shape, check out
+// http://www.allaboutcircuits.com/vol_2/chpt_7/4.html
 
-// start with lpf, then append asdr, then to the notes?
+
+
+
+
 
 define(['lib/timbre'],
 function(T) {
