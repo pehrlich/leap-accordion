@@ -25,13 +25,12 @@ html {
   margin-right: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 24px;
+  font-family: 'PT Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
   line-height: 1.5;
 }
 a {
-  color: #bdc3c7;
-  font-size: 24px;
+  color: #B8B89D;
   text-decoration: none;
 }
 /* `:focus` is linked to `:hover` for basic accessibility */

@@ -17,7 +17,7 @@ requirejs.config({
   }
 });
 
-requirejs(['app/bayan'],
+requirejs(['app/bayan', 'app/interface'],
 function (Bayan) {
 
   var canvas = document.getElementById('bayan');

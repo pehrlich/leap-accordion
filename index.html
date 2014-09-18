@@ -11,11 +11,14 @@
   ga('send', 'pageview');
 </script>
   <meta charset="utf-8">
-  <title>Leap Bayan</title>
+  <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+  <title>Leap Accordion</title>
 
   <link rel="stylesheet" href="style.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/three.js/r68/three.min.js"></script>
   <script src="//js.leapmotion.com/leap-0.6.2.js"></script>
+
+  <!-- Has a bug with offset: -->
   <!--<script src="//js.leapmotion.com/leap-plugins-0.1.7.min.js"></script>-->
   <script src="js/lib/leap-plugins-0.1.7.js"></script>
   <script src="js/lib/leap.bone-hand.js"></script>
@@ -30,11 +33,43 @@
 </head>
 <body>
 
+  <div id="fader"></div>
+
+
+  <div id="intro_wrapper">
+    <div class="modal" id="intro">
+
+      <h1>Leap Accordion</h1>
+
+      <img src="images/Jupiter_bayan_accordion.JPG"/>
+      <!-- Image thanks to wikipedia: http://en.wikipedia.org/wiki/Bayan_(accordion) -->
+      <p>
+        This is an experiment inspired by the <a href="http://en.wikipedia.org/wiki/Chromatic_button_accordion" target="_blank">chromatic
+        button accordion</a>'s compact keyboard layout and the <a href="http://www.leapmotion.com" target="_blank">Leap Motion Controller</a>.
+      </p>
+      <p>
+        The chromatic button layout works surprisingly well on the computer keyboard, and gives the keyboardist a far greater range than standard mappings imitating piano keyboards.
+      </p>
+      <p>
+        The Leap Motion Controller allows music to be played through hand motion, allowing accurate volume control calculated for every virtual reed.
+        There are five  <a href="http://en.wikipedia.org/wiki/Accordion_reed_ranks_and_switches" target="_blank">reed banks</a> designed to give
+        an authentic tremolo and harmonics.
+      </p>
+
+      <button id="begin_button">
+        Begin
+      </button>
+
+      <p class="small" id="attribution">
+        Made originally by <a href="https://twitter.com/benzguo" target="_blank">@benzguo</a>.&nbsp; Leap-Enabled by
+        <a href="https://twitter.com/ehrlicp" target="_blank">@ehrlicp</a> and <a href="https://twitter.com/binxed" target="_blank">@binxed</a>.
+      </p>
+
+    </div>
+  </div>
+
   <canvas id="bayan"></canvas>
   <textarea id="bayan-textarea" rows="3"></textarea>
-  <a href="/bayan/about.html">about</a> &nbsp <a href="https://twitter.com/benzguo" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @benzguo</a>
-  &nbsp <a href="https://twitter.com/ehrlicp" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @ehrlicp</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
   <h3><a href="http://en.wikipedia.org/wiki/Accordion_reed_ranks_and_switches">Reed Bank</a></h3>
 

@@ -20,3 +20,79 @@ canvas.leap-boneHand {
   left: 0;
   pointer-events: none;
 }
+
+#fader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0.2;
+  z-index: 1;
+  cursor: pointer;
+}
+
+#intro_wrapper {
+  position: absolute; left: 50%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#intro{
+  position: relative;
+  left: -50%;
+  width: 760px;
+  display: block;
+  pointer-events: initial;
+
+  background: white;
+  box-shadow: 0px 0px 1px #444;
+  border-radius: 3px;
+  padding: 2em 4em;
+  box-sizing: border-box;
+}
+
+#intro h1 {
+  text-align: center;
+}
+
+#intro img {
+  width: 400px;
+  margin: auto;
+  display: block;
+  margin-bottom: 2em;
+}
+
+#intro button {
+  display: block;
+  margin: 2em auto;
+  padding: 1em 1em;
+  border-radius: 3px;
+  font-size: 1em;
+  /*background: #D8D8B4;*/
+  /*color: rgb(56, 56, 16);*/
+  /*background: #C4DBAB;*/
+  border: none;
+  cursor: pointer;
+  width: 250px;
+
+  background: #7ca82d;
+  color: white;
+}
+#intro button:hover {
+  background: #769e29;
+}
+
+#intro p.small {
+  font-size: 16px;
+  color: #333;
+}
+
+#attribution{
+  /*position: absolute;*/
+  /*bottom: 0;*/
+  /*left: 0;*/
+  /*text-align: right;*/
+  /*padding: 0 2em;*/
+}
