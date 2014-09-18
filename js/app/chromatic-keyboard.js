@@ -31,11 +31,11 @@ function(ReedBank, LeapController) {
   function ChromaticKeyboard(){
 
     this.reedBanks = [
-      new ReedBank({octave: 4}), // 4'
+      new ReedBank({octave: 4}), // 16'
       new ReedBank({octave: 5}), // 8'
       new ReedBank({octave: 5, tremolo: 'upper' }),
       new ReedBank({octave: 5, tremolo: 'lower' }),
-      new ReedBank({octave: 6}) // 16'
+      new ReedBank({octave: 6}) // 4'
     ];
 
     this.reedBanks[1].enable();
@@ -55,10 +55,10 @@ function(ReedBank, LeapController) {
     $('#four_foot_input').change( function(e){
 
       if ( $(e.target).is(':checked') ){
-        this.reedBanks[0].enable();
+        this.reedBanks[4].enable();
         $('#four_foot_label').addClass('active')
       } else{
-        this.reedBanks[0].disable();
+        this.reedBanks[4].disable();
         $('#four_foot_label').removeClass('active')
       }
 
@@ -67,10 +67,10 @@ function(ReedBank, LeapController) {
     $('#sixteen_foot_input').change( function(e){
 
       if ( $(e.target).is(':checked') ){
-        this.reedBanks[4].enable();
+        this.reedBanks[0].enable();
         $('#sixteen_foot_label').addClass('active')
       } else{
-        this.reedBanks[4].disable();
+        this.reedBanks[0].disable();
         $('#sixteen_foot_label').removeClass('active')
       }
 
