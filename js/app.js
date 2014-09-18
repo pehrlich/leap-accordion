@@ -35,6 +35,5 @@ function (Bayan) {
     bayan.resize(w, h);
   }
 
-
 });
 

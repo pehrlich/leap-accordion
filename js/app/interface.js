@@ -1,23 +1,37 @@
 define([],
 function () {
 
-  console.log('interface');
-
-
   var MODAL = {
+
     hide: function(){
       $('#fader, #intro_wrapper').fadeOut(200)
+      $('#toggle_intro').removeClass('active');
+    },
+
+    show: function(){
+      $('#fader, #intro_wrapper').fadeIn(200)
+      $('#toggle_intro').addClass('active');
     }
+
   }
 
   $(function(){
-    console.log('wiring');
+
     $('#fader, #begin_button').click(function(){
-      console.log('click');
       MODAL.hide();
     });
-  });
 
-  return
+    $('#toggle_intro').click(function(){
+
+      if ($('#toggle_intro.active').length){
+        MODAL.hide();
+      } else {
+        MODAL.show();
+      }
+
+    })
+
+
+  });
 
 });
