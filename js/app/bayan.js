@@ -9,11 +9,10 @@ function (teoria, sc, KeyboardJS, createjs, ChromaticKeyboard, Key, LAYOUT_BL, L
    ['z','x','c','v','b','n','m',',','.','/']];
 
 
-  function Bayan(canvas, textArea) {
+  function Bayan(canvas) {
     this.keys = {};
     this.lastKeyUp = 'backspace';
     this.canvas = canvas;
-    this.textArea = textArea;
     this.stage = new createjs.Stage(canvas);
     this.layout = LAYOUT_BL;
     this.keyboard = {};
@@ -71,22 +70,6 @@ function (teoria, sc, KeyboardJS, createjs, ChromaticKeyboard, Key, LAYOUT_BL, L
 
       var k = Bayan.keyForEvent(e);
       if (self.keys[k]) return; // Prevent key repeat
-
-      var c = k;
-      var currentText = self.textArea.value;
-      if (c === 'backspace') {
-        self.textArea.value = currentText.substr(0, currentText.length - 1);
-      } else {
-        if (c === 'spacebar') {
-          c = ' ';
-        } else if (c === 'enter') {
-          c = '\r'
-        } else if (c.length > 1) {
-          c = '';
-        }
-        self.textArea.value = currentText + c;
-      }
-      self.textArea.scrollTop = self.textArea.scrollHeight;
 
       // Prevent '-' and '=' keys from triggering 'backspace' and 'v'
       // Tested in Chrome, not sure about other browsers

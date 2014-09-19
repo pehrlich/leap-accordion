@@ -21,9 +21,7 @@ requirejs(['app/bayan', 'app/interface'],
 function (Bayan) {
 
   var canvas = document.getElementById('bayan');
-  var context = canvas.getContext('2d');
-  var textArea = document.getElementById('bayan-textarea');
-  var bayan = new Bayan(canvas, textArea);
+  var bayan = new Bayan(canvas);
   window.app = bayan;
 
   window.addEventListener('resize', onResize, false);
