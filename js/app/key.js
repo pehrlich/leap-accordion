@@ -43,17 +43,17 @@ function(createjs, teoria) {
     this.shape.graphics.beginFill(keyColor).drawRoundRect(this.x, this.y, Key.width(), Key.width(), RADIUS);
     this.stage.addChild(this.shape);
 
-    this.text = new createjs.Text(keyName.toUpperCase(), FONT, TEXT_COLOR);
-    this.text.x = x + TEXT_PADDING;
-    this.text.y = y + TEXT_PADDING;
-    this.text.baseline = "top";
-    this.stage.addChild(this.text);
-
     this.noteLabel = new createjs.Text(this.noteNameForMidiNumber(midiNumber), FONT_ITALIC, TEXT_COLOR);
     this.noteLabel.x = x + TEXT_PADDING;
-    this.noteLabel.y = y + TEXT_PADDING + W * 0.5;
+    this.noteLabel.y = y + TEXT_PADDING;
     this.noteLabel.baseline = "top";
     this.stage.addChild(this.noteLabel);
+
+    this.letterLabel = new createjs.Text(keyName.toUpperCase(), FONT, TEXT_COLOR);
+    this.letterLabel.x = x + TEXT_PADDING;
+    this.letterLabel.y = y + TEXT_PADDING + W * 0.5;
+    this.letterLabel.baseline = "top";
+    this.stage.addChild(this.letterLabel);
 
     this.stage.update();
   }

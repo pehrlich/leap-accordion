@@ -44,7 +44,6 @@ function (teoria, sc, KeyboardJS, createjs, ChromaticKeyboard, Key, LAYOUT_BL, L
       e.preventDefault();
       LeapController.plugins.playback.player.toggle();
       if (LeapController.plugins.playback.player.state !== 'playing'){
-        console.log('clear hand');
         setTimeout(function(){
           // hax
           self.emitFakeFrame(frameWithNoHands)
