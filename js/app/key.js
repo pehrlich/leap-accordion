@@ -5,6 +5,7 @@ function(createjs, teoria) {
   var TEXT_PADDING = W*0.1;
   var RADIUS = 10;
   var FONT = W*0.3 + "px Helvetica";
+  var FONT_ITALIC = "italic " + W*0.3 + "px Helvetica";
   var TEXT_COLOR = "#FFFFFF";
   var BLACK_COLOR = "#2c3e50";
   var WHITE_COLOR = "#bdc3c7";
@@ -48,10 +49,36 @@ function(createjs, teoria) {
     this.text.baseline = "top";
     this.stage.addChild(this.text);
 
+    this.noteLabel = new createjs.Text(this.noteNameForMidiNumber(midiNumber), FONT_ITALIC, TEXT_COLOR);
+    this.noteLabel.x = x + TEXT_PADDING;
+    this.noteLabel.y = y + TEXT_PADDING + W * 0.5;
+    this.noteLabel.baseline = "top";
+    this.stage.addChild(this.noteLabel);
+
     this.stage.update();
   }
 
-  // Class methods
+
+  var noteMap = {};
+  var noteNumberMap = [];
+  var notes = [ "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" ];
+
+  for(var i = 0; i < 127; i++) {
+
+    var index = i,
+      key = notes[index % 12],
+      octave = ((index / 12) | 0) - 1; // MIDI scale starts at octave = -1
+
+    noteMap[key] = i;
+    noteNumberMap[i] = key;
+  }
+
+  Key.prototype.noteNameForMidiNumber = function(midiNumber) {
+    var noteName = noteNumberMap[midiNumber];
+    console.assert(noteName);
+    return noteName
+  }
+
   Key.width = function() {
     return W;
   }
