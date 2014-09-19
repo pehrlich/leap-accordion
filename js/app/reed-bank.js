@@ -27,7 +27,7 @@ function(Reed, LAYOUT_BL) {
   }
 
   ReedBank.prototype.hasKey = function(key){
-    return !!LAYOUT_BL[key]
+    return !isNaN(LAYOUT_BL[key])
   }
 
   ReedBank.prototype.keyToReed = function(keyName){
