@@ -1,5 +1,5 @@
-define([],
-function () {
+define(['app/leap'],
+function (LeapController) {
 
   var MODAL;
 
@@ -36,6 +36,12 @@ function () {
     }
   });
 
+  $(document).on('click', function(e){
+    if ( $(e.target).closest('.submenu').length === 0 && $(e.target).closest('#reed_banks_menu_control').length === 0 ) {
+      $('.submenu').hide()
+    }
+  });
+
   $(function(){
 
     $('#fader, #begin_button').click(MODAL.hide);
@@ -50,6 +56,10 @@ function () {
       $('#reed_banks_menu').toggle();
     });
 
+  });
+
+  LeapController.on('streamingStarted', function(){
+    $('#no_leap_message').fadeOut(200);
   });
 
 });

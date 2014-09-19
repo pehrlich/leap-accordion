@@ -84,7 +84,7 @@ canvas.leap-boneHand {
   background: #769e29;
 }
 
-#intro p.small {
+p.small {
   font-size: 16px;
   color: #333;
 }
@@ -153,4 +153,13 @@ footer .submenu img, footer .submenu span {
   width: 32px;
   display: inline-block;
   text-align: center;
+}
+
+#no_leap_message {
+  margin-top: -1em;
+  text-align: right;
+  padding-right: 160px;
+  margin-bottom: 2em;
+  color: #777;
+  font-size: 16px;
 }
