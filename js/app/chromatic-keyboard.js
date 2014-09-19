@@ -7,10 +7,6 @@
 // select reeds, cool
 // but how about dynamic tremelo adjustment?
 
-// For the tremolo (8′), may I recommend the lower octave to be tuned to 441.5Hz,
-// and the upper octave to 440.5Hz. And 441Hz in the middle.
-// http://accordionknowhow.wordpress.com/what-to-tune-to/
-
 // for wave shape, check out
 // http://www.allaboutcircuits.com/vol_2/chpt_7/4.html
 
@@ -39,47 +35,34 @@ function(ReedBank, LeapController) {
     ];
 
     this.reedBanks[1].enable();
+    this.reedBanks[2].enable();
 
-    $('#eight_foot_input').change( function(e){
 
-      if ( $(e.target).is(':checked') ){
-        this.reedBanks[1].enable();
-        $('#eight_foot_label').addClass('active')
-      } else{
-        this.reedBanks[1].disable();
-        $('#eight_foot_label').removeClass('active')
-      }
-
-    }.bind(this) );
-
-    $('#four_foot_input').change( function(e){
-
-      if ( $(e.target).is(':checked') ){
-        this.reedBanks[4].enable();
-        $('#four_foot_label').addClass('active')
-      } else{
-        this.reedBanks[4].disable();
-        $('#four_foot_label').removeClass('active')
-      }
-
-    }.bind(this) );
-
-    $('#sixteen_foot_input').change( function(e){
-
-      if ( $(e.target).is(':checked') ){
-        this.reedBanks[0].enable();
-        $('#sixteen_foot_label').addClass('active')
-      } else{
-        this.reedBanks[0].disable();
-        $('#sixteen_foot_label').removeClass('active')
-      }
-
-    }.bind(this) );
+    this.bindUIEvents('#eight_foot_input', '#eight_foot_label', 1);
+    this.bindUIEvents('#four_foot_input', '#four_foot_label', 4);
+    this.bindUIEvents('#sixteen_foot_input', '#sixteen_foot_label', 0);
+    this.bindUIEvents('#eight_foot_high_input', '#eight_foot_high_label', 2);
 
 
     this.activeKeys = {};
 
     LeapController.on('frame', this.onFrame.bind(this) );
+
+  }
+
+  // manage checkboxes...
+  ChromaticKeyboard.prototype.bindUIEvents = function(inputSelector, labelSelector, bankIndex) {
+
+    $(inputSelector).change( function(e){
+
+      if ( $(e.target).is(':checked') ){
+        this.reedBanks[bankIndex].enable();
+        $(labelSelector).addClass('active')
+      } else{
+        this.reedBanks[bankIndex].disable();
+        $(labelSelector).removeClass('active')
+      }
+    }.bind(this) );
 
   }
 
