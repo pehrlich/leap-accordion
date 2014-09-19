@@ -97,19 +97,60 @@ canvas.leap-boneHand {
   /*padding: 0 2em;*/
 }
 
+footer, footer .submenu {
+  background: #121;
+  color: #fff;
+  z-index: 2;
+}
+
 footer {
   position: fixed;
   bottom: 0;
   left: 0;
-  background: #121;
   padding: 0 1em;
-  color: #fff;
   width: 100%;
-  z-index: 2;
 }
 
 footer li {
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 1em;
+}
+footer > ul > li {
+  position: relative;
 }
 footer li a {
   color: #ccc;
+}
+
+footer .submenu li {
+  display: block;
+  padding-top: 0.5em;
+  white-space: nowrap;
+}
+
+
+footer img {
+  height: 32px;
+  width: 32px;
+}
+
+footer .submenu {
+  display: none;
+  position: absolute;
+  bottom: 50px;
+  left: -1em;
+  padding: 0 1em;
+  padding-bottom: 0.5em;
+}
+footer .submenu img, footer .submenu span {
+  vertical-align: middle;
+}
+
+.wiki-logo {
+  font-family: Garamond, Adobe Garamond Pro, Warnock, Warnock Pro, Bondoni, Bondoni MT, Goudy Old Style, Musica, serif;
+  font-size: 22px;
+  width: 32px;
+  display: inline-block;
+  text-align: center;
 }

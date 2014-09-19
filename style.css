@@ -32,6 +32,7 @@ html {
 a {
   color: #B8B89D;
   text-decoration: none;
+  cursor: pointer;
 }
 /* `:focus` is linked to `:hover` for basic accessibility */
 a:hover,
