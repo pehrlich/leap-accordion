@@ -103,10 +103,6 @@ function(ReedBank, LeapController, AudioContext) {
     }
   }
 
-  ChromaticKeyboard.prototype.graphWaveForm = function(){
-    AudioContext.analyser.getByteTimeDomainData(dataArray);
-  }
-
   ChromaticKeyboard.prototype.onFrame = function(frame){
     this.setActiveKeyWinds(frame);
     AudioContext.graphWaveFrom();

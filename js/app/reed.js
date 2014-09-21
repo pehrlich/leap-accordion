@@ -8,7 +8,7 @@ function(Context) {
 
 
     this.oscillator = Context.createOscillator();
-    this.oscillator.type = 3; // Square wave
+    this.oscillator.type = 1; // 3: Square wave
     this.oscillator.frequency.value = frequency;
 
 
@@ -25,11 +25,10 @@ function(Context) {
     this.filter.Q.value = 15; // random z
 
 
-//    this.oscillator.connect(this.bellowsGain);
     this.oscillator.connect(this.filter);
     this.filter.connect(this.asdrGain);
     this.asdrGain.connect(this.bellowsGain);
-    this.bellowsGain.connect(Context.analyser);
+    this.bellowsGain.connect(Context.waveShaper);
 
 
     this.oscillator[this.oscillator.start ? 'start' : 'noteOn'](0);
@@ -45,15 +44,11 @@ function(Context) {
 
   // The amount of wind going through a reed, between 0 and 1
   Reed.prototype.setWind = function(gain) {
-    this.bellowsGain.gain.value = gain;
+    this.bellowsGain.gain.value = gain * 0.05;
   };
 //
 //  Reed.prototype.changeDetune = function(val) {
 //    this.oscillator.detune.value = val;
-//  };
-//
-//  Reed.prototype.changeType = function(type) {
-//    this.oscillator.type = type;
 //  };
 
   return Reed;
