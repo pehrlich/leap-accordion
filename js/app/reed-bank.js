@@ -45,6 +45,7 @@ function(Reed, LAYOUT_BL) {
   // For the tremolo (8′), may I recommend the lower octave to be tuned to 441.5Hz,
   // and the upper octave to 440.5Hz. And 441Hz in the middle.
   // http://accordionknowhow.wordpress.com/what-to-tune-to/
+  // http://www.patmissin.com/tunings/tun10.html
   ReedBank.prototype.midiNoteToFrequency = function(midiNote){
     var relativeOctave = Math.floor(midiNote / 12); // octave of note within this layout
 

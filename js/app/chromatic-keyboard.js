@@ -11,8 +11,8 @@
 // http://www.allaboutcircuits.com/vol_2/chpt_7/4.html
 
 
-define(['app/reed-bank', 'app/leap'],
-function(ReedBank, LeapController) {
+define(['app/reed-bank', 'app/leap', 'app/audio-context'],
+function(ReedBank, LeapController, AudioContext) {
 
   // Note, that this could be made to sound like an accordion with MIDI.js and a soundfont
   // http://mudcu.be/midi-js/
@@ -82,7 +82,7 @@ function(ReedBank, LeapController) {
 
   };
 
-  ChromaticKeyboard.prototype.onFrame = function(frame){
+  ChromaticKeyboard.prototype.setActiveKeyWinds = function(frame){
     var wind,
       hand = frame.activeHand();
 
@@ -101,7 +101,15 @@ function(ReedBank, LeapController) {
       }
 
     }
+  }
 
+  ChromaticKeyboard.prototype.graphWaveForm = function(){
+    AudioContext.analyser.getByteTimeDomainData(dataArray);
+  }
+
+  ChromaticKeyboard.prototype.onFrame = function(frame){
+    this.setActiveKeyWinds(frame);
+    AudioContext.graphWaveFrom();
   };
 
   return ChromaticKeyboard;

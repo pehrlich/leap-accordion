@@ -1,6 +1,13 @@
 define(['app/leap'],
 function (LeapController) {
 
+  var getParameterByName = function (name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+          results = regex.exec(location.search);
+      return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
+
   var MODAL;
 
   MODAL = {
@@ -55,6 +62,11 @@ function (LeapController) {
       e.preventDefault();
       $('#reed_banks_menu').toggle();
     });
+
+    if (getParameterByName('hide-intro')){
+      $('#toggle_intro').click();
+    }
+
 
   });
 

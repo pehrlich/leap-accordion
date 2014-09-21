@@ -125,6 +125,7 @@ function() {
         },
 
         // expects x and y on the key (in pixels?)
+        // plotter should probably be moved out of this
         gainForKey: function (key) {
           var speed = this.speedAtPoint(
             [key.x, 0, key.y]

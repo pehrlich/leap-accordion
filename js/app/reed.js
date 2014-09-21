@@ -29,7 +29,7 @@ function(Context) {
     this.oscillator.connect(this.filter);
     this.filter.connect(this.asdrGain);
     this.asdrGain.connect(this.bellowsGain);
-    this.bellowsGain.connect(Context.destination);
+    this.bellowsGain.connect(Context.analyser);
 
 
     this.oscillator[this.oscillator.start ? 'start' : 'noteOn'](0);
