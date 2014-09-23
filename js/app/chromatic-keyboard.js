@@ -30,6 +30,8 @@ function(ReedBank, LeapController, AudioContext) {
   // for now, one button = one reed bank, but that will change w/ proper register switches
   function ChromaticKeyboard(){
 
+    this.useLeap = true;
+
     this.reedBanks = [
       new ReedBank({octave: 4}), // 16'
       new ReedBank({octave: 5}), // 8'
@@ -123,9 +125,34 @@ function(ReedBank, LeapController, AudioContext) {
   }
 
   ChromaticKeyboard.prototype.onFrame = function(frame){
-    this.setActiveKeyWinds(frame);
+    if (this.useLeap){
+      this.setActiveKeyWinds(frame);
+    }
     AudioContext.graphWaveFrom();
   };
+
+  // makes a single tone of constant volume and frequency, for debugging
+  ChromaticKeyboard.prototype.startTone = function(key){
+    for (var i = 0; i < this.reedBanks.length; i++){
+      this.reedBanks[i].setWind(key.keyName, 1)
+    }
+    this.useLeap = false;
+  }
+
+  ChromaticKeyboard.prototype.stopTone = function(key){
+    for (var i = 0; i < this.reedBanks.length; i++){
+      this.reedBanks[i].setWind(key.keyName, 0)
+    }
+    this.useLeap = true;
+  }
+
+  ChromaticKeyboard.prototype.toggleTone = function(key){
+    if (this.useLeap) {
+      this.startTone(key);
+    }else {
+      this.stopTone(key);
+    }
+  }
 
   return ChromaticKeyboard;
 });

@@ -22,6 +22,11 @@ function(Reed, LAYOUT_BL) {
 
   ReedBank.prototype.disable = function(){
     this.enabled = false;
+
+    for (var keyName in this.reeds){
+      this.reeds[keyName].setWind(0)
+    }
+
     return this;
   }
 
