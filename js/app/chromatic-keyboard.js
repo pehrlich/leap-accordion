@@ -7,8 +7,12 @@
 // select reeds, cool
 // but how about dynamic tremelo adjustment?
 
-// for wave shape, check out
+// for accordion wave shape, check out
 // http://www.allaboutcircuits.com/vol_2/chpt_7/4.html
+// http://music.columbia.edu/cmc/musicandcomputers/chapter3/03_03.php
+// http://mdn.github.io/voice-change-o-matic/
+// http://rhordijk.home.xs4all.nl/G2Pages/HrmDistortion.htm
+// http://webaudioapi.com/samples/procedural/
 
 
 define(['app/reed-bank', 'app/leap', 'app/audio-context'],
@@ -37,33 +41,48 @@ function(ReedBank, LeapController, AudioContext) {
     this.reedBanks[1].enable();
     this.reedBanks[2].enable();
 
-
-    this.bindUIEvents('#eight_foot_input', '#eight_foot_label', 1);
-    this.bindUIEvents('#four_foot_input', '#four_foot_label', 4);
-    this.bindUIEvents('#sixteen_foot_input', '#sixteen_foot_label', 0);
-    this.bindUIEvents('#eight_foot_high_input', '#eight_foot_high_label', 2);
-
-
     this.activeKeys = {};
+
+    this.setRegister('accordion');
 
     LeapController.on('frame', this.onFrame.bind(this) );
 
   }
 
-  // manage checkboxes...
-  ChromaticKeyboard.prototype.bindUIEvents = function(inputSelector, labelSelector, bankIndex) {
+  /*
+   * Accepts a register descriptor, such as Violin, Harmonium, or Accordion
+   * Turns on and off reed banks to match that feel.
+   */
+  ChromaticKeyboard.prototype.setRegister = function (registerName) {
+    switch (registerName){
+      case 'clarinet':
+        this.enableReedBanks(1);
+        break;
+      case 'violin':
+        this.enableReedBanks(1, 2);
+        break;
+      case 'accordion':
+        this.enableReedBanks(1, 2, 0);
+        break;
+      case 'bandoneon':
+        this.enableReedBanks(2, 0);
+        break;
+      case 'bassoon':
+        this.enableReedBanks(0);
+        break;
+      default:
+        console.warn('unknown register name:', registerName);
+    }
+  }
 
-    $(inputSelector).change( function(e){
-
-      if ( $(e.target).is(':checked') ){
-        this.reedBanks[bankIndex].enable();
-        $(labelSelector).addClass('active')
-      } else{
-        this.reedBanks[bankIndex].disable();
-        $(labelSelector).removeClass('active')
+  ChromaticKeyboard.prototype.enableReedBanks = function (){
+    for (var i = 0; i  < 5; i++){
+      if (Array.prototype.indexOf.call(arguments, i) === -1){
+        this.reedBanks[i].disable()
+      }else {
+        this.reedBanks[i].enable()
       }
-    }.bind(this) );
-
+    }
   }
 
   ChromaticKeyboard.prototype.keyDown = function(key) {

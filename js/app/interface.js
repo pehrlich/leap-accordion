@@ -67,6 +67,26 @@ function (LeapController) {
       $('#toggle_intro').click();
     }
 
+    $('.register-switch a').click(function(e){
+
+      e.preventDefault();
+
+      var link = $(e.target).closest('a');
+
+      window.app.synth.setRegister(
+        link.attr('href').split('#')[1]
+      );
+
+      // update images only after successfully setting registers
+      $('#reed_banks_menu_control img').attr(
+        'src',
+        link.find('img:first').attr('src')
+      );
+
+      $('.submenu').hide();
+
+    })
+
 
   });
 
