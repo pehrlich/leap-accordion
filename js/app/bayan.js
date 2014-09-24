@@ -149,8 +149,9 @@ function (teoria, sc, KeyboardJS, createjs, ChromaticKeyboard, Key, LAYOUT_BL, L
             break;
         }
 
-        var key = new Key(c*(Key.width() + padding) + leftMargin + xOffset,
+        var key = new Key(c*(Key.width() + padding) + xOffset,
                           r*(Key.width() + padding),
+                          leftMargin,
                           this.midiNumberForKey(keyName),
                           keyName,
                           this.stage,

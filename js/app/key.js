@@ -24,9 +24,19 @@ function(createjs, teoria) {
                 "#FFA500",
                 "#FFEB00"]
 
-  function Key(x, y, midiNumber, keyName, stage) {
-    this.x = x;
+  function Key(x, y, leftMargin, midiNumber, keyName, stage) {
+    this.x = x + leftMargin;
     this.y = y;
+    this.xWithoutLeftMargin = x;
+
+    // based off of the screen position, gets the position of the reed
+    // pretty much a simple gain factor
+    this.reedPosition = [
+      (this.xWithoutLeftMargin - 345) * 20,
+      (200 -this.y) * 20,
+      0
+    ]
+
     this.midiNumber = midiNumber;
     this.keyName = keyName;
     this.stage = stage;
@@ -44,14 +54,14 @@ function(createjs, teoria) {
     this.stage.addChild(this.shape);
 
     this.noteLabel = new createjs.Text(this.noteNameForMidiNumber(midiNumber), FONT_ITALIC, TEXT_COLOR);
-    this.noteLabel.x = x + TEXT_PADDING;
-    this.noteLabel.y = y + TEXT_PADDING;
+    this.noteLabel.x = this.x + TEXT_PADDING;
+    this.noteLabel.y = this.y + TEXT_PADDING;
     this.noteLabel.baseline = "top";
     this.stage.addChild(this.noteLabel);
 
     this.letterLabel = new createjs.Text(keyName.toUpperCase(), FONT, TEXT_COLOR);
-    this.letterLabel.x = x + TEXT_PADDING;
-    this.letterLabel.y = y + TEXT_PADDING + W * 0.5;
+    this.letterLabel.x = this.x + TEXT_PADDING;
+    this.letterLabel.y = this.y + TEXT_PADDING + W * 0.5;
     this.letterLabel.baseline = "top";
     this.stage.addChild(this.letterLabel);
 

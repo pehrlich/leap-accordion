@@ -142,21 +142,18 @@
   }
 
   TimeSeries = function (opts) {
-    console.log(opts)
 
     opts = opts || {};
     this.x = opts.x || 0;
     this.y = opts.y || 0;
     this.precision = opts.precision || 5;
     this.units = opts.units || '';
-    console.log('widht received', opts.width);
     this.width = opts.width || 300;
     this.height = opts.height || 50;
     this.length = opts.length || 600;
     this.color = opts.color || '#000';
     this.name = opts.name || "";
     this.frameHandler = opts.frameHandler;
-    console.log(this)
 
     this.max = -Infinity;
     this.min = Infinity;
@@ -189,6 +186,7 @@
     var max = -Infinity;
     var min = Infinity;
     this.data.forEach(function (d, i) {
+
       if (d > max) max = d;
       if (d < min) min = d;
 
@@ -202,6 +200,7 @@
     context.stroke();
 
     // draw labels
+
     context.fillText( this.name, padding,  top);
     context.fillText( this.data[this.data.length - 1].toPrecision(this.precision) + this.units, padding, 0 );
 

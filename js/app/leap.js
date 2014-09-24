@@ -75,10 +75,10 @@ function(LeapDataPlotter) {
 
           var V_relative = Leap.vec3.create();
           var V_point = Leap.vec3.create();
-          var V_hand = Leap.vec3.create();
+          var V_hand;
 
           Leap.vec3.sub(
-            V_relative,                          // out
+            V_relative,                // out
             this.palmNormal,           // a
             previousHand.palmNormal    // b
           );
@@ -89,7 +89,8 @@ function(LeapDataPlotter) {
             point     // b
           );
 
-          // only take Y (up-down) motion
+          // only take Y (up-down) motion of the hand
+          // (leaving in relative motion in all dimensions)
           V_hand = [0, this.palmVelocity[1], 0]
 
           Leap.vec3.add(
@@ -98,6 +99,13 @@ function(LeapDataPlotter) {
             V_relative
           );
 
+          plotter.plot('V_relative', V_relative[0], {
+            precision: 3
+          });
+
+          plotter.plot('V_hand', V_hand[1], {
+            precision: 3
+          });
 
           return V_point;
         },
@@ -117,13 +125,19 @@ function(LeapDataPlotter) {
         // plotter should probably be moved out of this
         gainForKey: function (key) {
           var speed = this.speedAtPoint(
-            [key.x, 0, key.y]
+            key.reedPosition
           );
 
 //          console.log(key.x, key.y);
 
-          var gain = speed / 200;
+          plotter.plot('wind', speed, {
+            precision: 3
+          });
 
+          plotter.update()
+
+
+          var gain = speed / 200;
 
           // max gain of 2 is plenty
           gain = Math.min(gain, 2);

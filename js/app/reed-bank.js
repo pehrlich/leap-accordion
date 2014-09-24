@@ -59,7 +59,7 @@ function(Reed, LAYOUT_BL) {
     var frequency = Math.pow(2, (midiNote) / 12) * 440.0;
 
 
-    console.assert(relativeOctave > -1 && relativeOctave < 3, "Relative Octave is" + relativeOctave);
+    console.assert(relativeOctave > -1 && relativeOctave < 4, "Relative Octave is " + relativeOctave);
 
     if (this.tremolo){
       console.assert(this.tremolo == 'upper' || this.tremolo == 'lower')
@@ -74,6 +74,9 @@ function(Reed, LAYOUT_BL) {
           frequency += 1;
           break;
         case 2:
+          frequency += 0.5;
+          break;
+        case 3: // upper right quadrant
           frequency += 0.5;
           break;
       }
