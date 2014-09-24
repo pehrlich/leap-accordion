@@ -14,6 +14,9 @@
 // http://rhordijk.home.xs4all.nl/G2Pages/HrmDistortion.htm
 // http://webaudioapi.com/samples/procedural/
 
+// accordion notes chart
+// https://www.google.com/search?q=accordion+notes+chart&es_sm=91&tbm=isch&imgil=PwktlbHXHJm-0M%253A%253Bfft6LpoFArmeaM%253Bhttp%25253A%25252F%25252Fwww.accordionlinks.com%25252Fplay.html&source=iu&pf=m&fir=PwktlbHXHJm-0M%253A%252Cfft6LpoFArmeaM%252C_&usg=__fd0UB8GiuOILgEo_vb5WjbvpYn8%3D&biw=1879&bih=1042#facrc=_&imgdii=_&imgrc=v38L0bKBb-9owM%253A%3BaDzKbAKZu4UaTM%3Bhttp%253A%252F%252Fwww.accordion.co.uk%252Fnewfaq%252Fbsystem.gif%3Bhttp%253A%252F%252Fwww.accordion.co.uk%252Faccordion-faq.html%3B596%3B243
+
 
 define(['app/reed-bank', 'app/leap', 'app/audio-context'],
 function(ReedBank, LeapController, AudioContext) {
