@@ -19,15 +19,16 @@ function(Context) {
     this.asdrGain = Context.createGain();
 
 
-    this.filter = Context.createBiquadFilter();
-    this.filter.type = 0;              // Low-pass filter.
-    this.filter.frequency.value = 700; // cutoff
-    this.filter.Q.value = 15; // random z
+//    this.filter = Context.createBiquadFilter();
+//    this.filter.type = 0;              // Low-pass filter.
+//    this.filter.frequency.value = 700; // cutoff
+//    this.filter.Q.value = 15; // random z
 
 
-    this.oscillator.connect(this.filter);
-    this.filter.connect(this.asdrGain);
-    this.asdrGain.connect(this.bellowsGain);
+//    this.oscillator.connect(this.filter);
+//    this.filter.connect(this.asdrGain);
+//    this.asdrGain.connect(this.bellowsGain);
+    this.oscillator.connect(this.bellowsGain);
     this.bellowsGain.connect(Context.waveShaper);
 
 

@@ -51,6 +51,7 @@ function(Reed, LAYOUT_BL) {
   // and the upper octave to 440.5Hz. And 441Hz in the middle.
   // http://accordionknowhow.wordpress.com/what-to-tune-to/
   // http://www.patmissin.com/tunings/tun10.html
+  // http://www.reyesaccordions.com/Paco4512/FAQ/AccordionSwitches.htm
   ReedBank.prototype.midiNoteToFrequency = function(midiNote){
     var relativeOctave = Math.floor(midiNote / 12); // octave of note within this layout
 
