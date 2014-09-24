@@ -67,6 +67,13 @@ function (LeapController) {
       $('#toggle_intro').click();
     }
 
+    var register = getParameterByName('register');
+    if (register && register.length > 0 ){
+      setTimeout(function(){
+        $('a[href=#' + register + ']').click();
+      }, 500)
+    }
+
     $('.register-switch a').click(function(e){
 
       e.preventDefault();
@@ -86,6 +93,14 @@ function (LeapController) {
       $('.submenu').hide();
 
     })
+
+    $('#stats_control').click(function(e){
+
+      e.preventDefault();
+
+      $('#stats').toggle();
+
+    });
 
 
   });

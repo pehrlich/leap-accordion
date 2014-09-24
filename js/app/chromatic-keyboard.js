@@ -154,5 +154,9 @@ function(ReedBank, LeapController, AudioContext) {
     }
   }
 
+  ChromaticKeyboard.prototype.toggleDistortion = function(){
+    AudioContext.waveShaper.setCurve('noop')
+  }
+
   return ChromaticKeyboard;
 });

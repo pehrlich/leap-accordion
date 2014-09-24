@@ -1,18 +1,7 @@
-define([],
-function() {
+define(['lib/LeapDataPlotter'],
+function(LeapDataPlotter) {
 
   var controller;
-
-  // in case we remove jquery later?
-//  window.onload = function () {
-//    window.plotter = new LeapDataPlotter();
-//
-//    console.log('setting up via onoad');
-//    controller.use('boneHand', {
-//      targetEl: document.body
-//    })
-//  }
-
 
   Leap.plugin('palmPointVelocity', function (scope) {
     scope || (scope = {});
@@ -163,7 +152,7 @@ function() {
               });
 
             plotter.clear()
-//            plotter.draw()
+            plotter.draw()
           }
 
 
@@ -195,7 +184,6 @@ function() {
 
     controller.connection.protocol.on('beforeFrameCreated', function(data){
       if (data.hands[0]){
-//        console.log(JSON.stringify(data));
       }
     })
   });
@@ -203,7 +191,9 @@ function() {
 
 
   $(function(){
-    window.plotter = new LeapDataPlotter();
+    window.plotter = new LeapDataPlotter({
+//      el: $('#leap_plotter').get(0)
+    });
 
     controller.use('boneHand', {
       targetEl: document.body

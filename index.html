@@ -25,7 +25,6 @@
   <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 
   <script src="js/app/console.js"></script>
-  <script src="js/lib/LeapDataPlotter.js"></script>
   <script data-main="js/app" src="js/require.js"></script>
 
   <link href="css/main.css" rel="stylesheet" type="text/css" />
@@ -77,9 +76,15 @@
   </p>
 
   <canvas id="bayan"></canvas>
-  <canvas id="waveform_graph" width="600" height="120"></canvas>
 
-  <button onclick="app.synth.toggleTone(app.keyboard['t']);">Toggle Tone</button>
+  <div id="stats" class="hidden">
+    <canvas id="leap_plotter" class="leap-data-plotter"></canvas>
+
+    <canvas id="waveform_graph" width="600" height="120"></canvas>
+
+    <button onclick="app.synth.toggleTone(app.keyboard['t']);">Toggle Tone</button>
+    <button onclick="app.synth.toggleDistortion();">Toggle Distortion</button>
+  </div>
 
 <footer>
   <ul>
@@ -134,6 +139,10 @@
       <a id="reed_banks_menu_control">
         <img src="images/Accordionstops_accordion.svg" id="reed_bank_menu_img"/>
       </a>
+    </li>
+
+    <li style="float: right">
+      <a href="#stats" id="stats_control">Stats for Nerds</a>
     </li>
 
   </ul>

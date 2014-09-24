@@ -163,3 +163,18 @@ footer .submenu img, footer .submenu span {
   color: #777;
   font-size: 16px;
 }
+
+.hidden {
+  display: none;
+}
+
+#stats {
+  position: fixed;
+  bottom: 80px;
+  right: 0;
+}
+
+#stats_control {
+  padding-right: 20px;
+  font-size: 16px;
+}

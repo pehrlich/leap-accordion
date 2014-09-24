@@ -63,25 +63,44 @@ function() {
 
 
 
-  // set up wave shaper
-
   // visualize with http://kevincennis.github.io/transfergraph/
-  function makeDistortionCurve(amount) {
-    var k = typeof amount === 'number' ? amount : 50,
-      n_samples = 44100,
-      curve = new Float32Array(n_samples),
-      deg = Math.PI / 180,
-      i = 0,
-      x;
-    for ( ; i < n_samples; ++i ) {
-      x = i * 2 / n_samples - 1;
-      curve[i] = ( 3 + k ) * x * 20 * deg / ( Math.PI + k * Math.abs(x) );
+  // It looks like getting good curves is an art unto itself!
+  // http://www.musicradar.com/us/computermusic/waveshaper-cm-free-waveshaping-distortion-vst-au-effect-from-cableguys-575381
+  // https://www.ableton.com/en/blog/shaper-max-live-effect-audio-mangling-k-devices/
+  // https://soundcloud.com/cableguys/sets/cableguys-curve-2-sound-design
+  function setCurve(callback) {
+
+    var n_samples = 44100, // ?
+      curve = new Float32Array(n_samples);
+
+    for (var i = 0 ; i < n_samples; ++i ) {
+      curve[i] = callback(
+        i * 2 / n_samples - 1
+      );
     }
+
     return curve;
+
   };
 
   var distortion = context.waveShaper = context.createWaveShaper();
-  distortion.curve = makeDistortionCurve(50);
+
+  var
+    k = 50,
+    deg = Math.PI / 180,
+    curves = {
+      noop: setCurve( function(x){ return Math.sin(x) } ),
+      tangentLooking: setCurve( function(x){
+        return ( 3 + k ) * x * 20 * (deg) / ( Math.PI + k * Math.abs(x) );
+      })
+    }
+
+  distortion.setCurve = function(curveName){
+    this.curve = curves[curveName]
+  }
+
+  distortion.setCurve('noop');
+
   distortion.connect(analyser);
 
   return context;

@@ -1,6 +1,15 @@
-var LeapDataPlotter, TimeSeries;
+// this allows RequireJS without necessitating it.
+(function (root, factory) {
 
-(function () {
+  if (typeof define === "function" && define.amd) {
+    define([], factory);
+  } else {
+    root.LeapDataPlotter = factory();
+  }
+
+}(this, function () {
+
+  var LeapDataPlotter, TimeSeries;
 
   var colors = ['#900', '#090', '#009', '#990', '#909', '#099'];
   var colorIndex = 0;
@@ -9,14 +18,19 @@ var LeapDataPlotter, TimeSeries;
     this.options = options || (options = {});
     this.seriesHash = {};
     this.series = [];
-    this.init();
+    this.init(options.el);
   }
 
-  LeapDataPlotter.prototype.init = function() {
+  LeapDataPlotter.prototype.init = function(el) {
 
-    var canvas = document.createElement('canvas');
-    canvas.className = "leap-data-plotter";
-    document.body.appendChild(canvas);
+    if (el){
+      var canvas = el;
+    }else {
+      var canvas = document.createElement('canvas');
+      canvas.className = "leap-data-plotter";
+      document.body.appendChild(canvas);
+    }
+
     this.canvas = canvas;
     this.context = canvas.getContext('2d');
 
@@ -26,10 +40,10 @@ var LeapDataPlotter, TimeSeries;
   // this method must be called any time the canvas changes size.
   LeapDataPlotter.prototype.rescale = function(){
     var styles = getComputedStyle(this.canvas);
-    var windowWidth = parseInt(styles.width, 10);
-    var windowHeight = parseInt(styles.height, 10);
-    this.width = windowWidth;
-    this.height = windowHeight;
+    var canvasWidth = parseInt(styles.width, 10);
+    var canvasHeight = parseInt(styles.height, 10);
+    this.width = canvasWidth || 300;
+    this.height = canvasHeight || 50;
 
     var devicePixelRatio = window.devicePixelRatio || 1;
     var backingStoreRatio = this.context.webkitBackingStorePixelRatio ||
@@ -122,18 +136,27 @@ var LeapDataPlotter, TimeSeries;
     });
   }
 
+  LeapDataPlotter.prototype.update = function(){
+    this.clear();
+    this.draw();
+  }
+
   TimeSeries = function (opts) {
+    console.log(opts)
+
     opts = opts || {};
     this.x = opts.x || 0;
     this.y = opts.y || 0;
     this.precision = opts.precision || 5;
     this.units = opts.units || '';
-    this.width = opts.width || 1000;
+    console.log('widht received', opts.width);
+    this.width = opts.width || 300;
     this.height = opts.height || 50;
-    this.length = opts.length || 1000;
+    this.length = opts.length || 600;
     this.color = opts.color || '#000';
     this.name = opts.name || "";
     this.frameHandler = opts.frameHandler;
+    console.log(this)
 
     this.max = -Infinity;
     this.min = Infinity;
@@ -193,5 +216,6 @@ var LeapDataPlotter, TimeSeries;
     this.max = max;
   }
 
+  return LeapDataPlotter;
 
-}());
+}));
