@@ -85,7 +85,6 @@ function(Reed, LAYOUT_BL) {
 
     console.log('midinote: ', midiNote, 'frequency', frequency);
 
-    // forgot where this came from :(
     return frequency
   }
 

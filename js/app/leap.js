@@ -98,14 +98,14 @@ function(LeapDataPlotter) {
             V_hand,
             V_relative
           );
-
-          plotter.plot('V_relative', V_relative[0], {
-            precision: 3
-          });
-
-          plotter.plot('V_hand', V_hand[1], {
-            precision: 3
-          });
+//
+//          plotter.plot('V_relative', V_relative[0], {
+//            precision: 3
+//          });
+//
+//          plotter.plot('V_hand', V_hand[1], {
+//            precision: 3
+//          });
 
           return V_point;
         },
@@ -129,12 +129,12 @@ function(LeapDataPlotter) {
           );
 
 //          console.log(key.x, key.y);
-
-          plotter.plot('wind', speed, {
-            precision: 3
-          });
-
-          plotter.update()
+//
+//          plotter.plot('wind', speed, {
+//            precision: 3
+//          });
+//
+//          plotter.update()
 
 
           var gain = speed / 200;
@@ -147,27 +147,26 @@ function(LeapDataPlotter) {
 
           gain = Math.max(gain, 0);
 
-//          console.log('gain ', gain.toPrecision(3));
 
           if (plotter) {
-            plotter.plot('speed', speed,
-              {
-                precision: 3
-              });
+//          if (plotter) {
+//            plotter.plot('speed', speed,
+//              {
+//                precision: 3
 //
 //          plotter.plot('gain', gain,
 //            {
 //              precision: 3
 //            });
 
-            plotter.plot('palmVelocity', this.speedAtPoint([0, 0, 0]),
-              {
-                precision: 3
-              });
-
-            plotter.clear()
-            plotter.draw()
-          }
+//            plotter.plot('palmVelocity', this.speedAtPoint([0, 0, 0]),
+//              {
+//                precision: 3
+//              });
+//
+//            plotter.clear()
+//            plotter.draw()
+//          }
 
 
           return gain
@@ -202,17 +201,17 @@ function(LeapDataPlotter) {
 
   });
 
-  controller.on('hand', function(hand){
-    plotter.plot('press', hand.indexFinger.pressStrength(), {precision: 3})
-    plotter.update()
-  });
+//  controller.on('hand', function(hand){
+//    plotter.plot('press', hand.indexFinger.pressStrength(), {precision: 3})
+//    plotter.update()
+//  });
 
 
 
   $(function(){
-    window.plotter = new LeapDataPlotter({
-//      el: $('#leap_plotter').get(0)
-    });
+//    window.plotter = new LeapDataPlotter({
+////      el: $('#leap_plotter').get(0)
+//    });
 
     controller.use('boneHand', {
       targetEl: document.body
