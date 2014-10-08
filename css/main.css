@@ -172,6 +172,12 @@ footer .submenu img, footer .submenu span {
   position: fixed;
   bottom: 80px;
   right: 0;
+  white-space: nowrap;
+  text-align: right;
+}
+
+#stats a {
+  color: blue;
 }
 
 #stats_control {

@@ -20,6 +20,8 @@ requirejs.config({
 requirejs(['app/bayan', 'app/interface'],
 function (Bayan) {
 
+  console.log("Welcome to Leap Accordion! The source is available here: https://github.com/pehrlich/leap-accordion");
+
   var canvas = document.getElementById('bayan');
   var bayan = new Bayan(canvas);
   window.app = bayan;
