@@ -78,11 +78,10 @@ function (LeapController) {
 
       e.preventDefault();
 
-      var link = $(e.target).closest('a');
+      var link = $(e.target).closest('a'),
+        registerName = link.attr('href').split('#')[1]
 
-      window.app.synth.setRegister(
-        link.attr('href').split('#')[1]
-      );
+      window.app.synth.setRegister(registerName);
 
       // update images only after successfully setting registers
       $('#reed_banks_menu_control img').attr(
@@ -91,6 +90,11 @@ function (LeapController) {
       );
 
       $('.submenu').hide();
+
+
+      if (window['_gaq']){
+        _gaq.push(['_trackEvent', 'Register', 'Select', registerName]);
+      }
 
     })
 

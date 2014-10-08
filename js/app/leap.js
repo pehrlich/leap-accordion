@@ -196,10 +196,15 @@ function(LeapDataPlotter) {
 
   controller.on('ready', function(){
 
-    controller.connection.protocol.on('beforeFrameCreated', function(data){
-      if (data.hands[0]){
-      }
-    })
+    if (window['_gaq']){
+      _gaq.push(['_trackEvent', 'LeapJS', 'Ready', controller.connection.protocol.serviceVersion]);
+    }
+
+  });
+
+  controller.on('hand', function(hand){
+    plotter.plot('press', hand.indexFinger.pressStrength(), {precision: 3})
+    plotter.update()
   });
 
 
