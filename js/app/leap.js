@@ -14,7 +14,7 @@ function(LeapDataPlotter) {
         activeHand: function () {
           var hand = this.hands[0];
 
-          if (!( hand && hand.previousFrameHand() && hand.grabStrength < 0.3 )) {
+          if (!( hand && hand.previousFrameHand() )) {
             return
           }
 
