@@ -17,6 +17,7 @@ function(Context) {
 
 
     this.asdrGain = Context.createGain();
+    this.asdrGain.gain.value = 2;
 
 
 //    this.filter = Context.createBiquadFilter();
@@ -27,9 +28,9 @@ function(Context) {
 
 //    this.oscillator.connect(this.filter);
 //    this.filter.connect(this.asdrGain);
-//    this.asdrGain.connect(this.bellowsGain);
     this.oscillator.connect(this.bellowsGain);
-    this.bellowsGain.connect(Context.waveShaper);
+    this.bellowsGain.connect(this.asdrGain);
+    this.asdrGain.connect(Context.waveShaper);
 
 
     this.oscillator[this.oscillator.start ? 'start' : 'noteOn'](0);

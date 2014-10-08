@@ -148,11 +148,11 @@ function(LeapDataPlotter) {
           gain = Math.max(gain, 0);
 
 
-          if (plotter) {
 //          if (plotter) {
 //            plotter.plot('speed', speed,
 //              {
 //                precision: 3
+//              });
 //
 //          plotter.plot('gain', gain,
 //            {
