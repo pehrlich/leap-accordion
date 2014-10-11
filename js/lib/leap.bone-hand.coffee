@@ -1,5 +1,7 @@
+scene = null
+
 initScene = (targetEl)->
-  window.scene = scene = new THREE.Scene()
+  scene = scene = new THREE.Scene()
   renderer = new THREE.WebGLRenderer({
     alpha: true
   })
@@ -65,10 +67,10 @@ baseBoneRotation = (new THREE.Quaternion).setFromEuler(
 
 
 jointColor = (new THREE.Color).setHex(0x5daa00)
-boneWhite = (new THREE.Color).setHex(0xffffff)
+boneColor = (new THREE.Color).setHex(0xffffff)
 
-jointSize = 8
-
+boneScale  = 1 / 6
+jointScale = 1 / 5
 
 boneHand = (hand) ->
   hand.fingers.forEach (finger) ->
@@ -86,21 +88,25 @@ boneHand = (hand) ->
         console.warn("error, no bones on", hand.id)
         return
 
+      boneRadius  = hand.middleFinger.proximal.length / 6
+      jointRadius = hand.middleFinger.proximal.length / 5
+
       finger.bones.forEach (bone) ->
 
         # create joints
 
+
         # CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded)
         boneMesh = new THREE.Mesh(
-          new THREE.CylinderGeometry(5, 5, bone.length),
+          new THREE.CylinderGeometry(boneRadius, boneRadius, bone.length, 32),
           new THREE.MeshPhongMaterial()
         )
-        boneMesh.material.color.copy(boneWhite)
+        boneMesh.material.color.copy(boneColor)
         scene.add boneMesh
         boneMeshes.push boneMesh
 
         jointMesh = new THREE.Mesh(
-          new THREE.SphereGeometry(jointSize),
+          new THREE.SphereGeometry(jointRadius, 32, 32),
           new THREE.MeshPhongMaterial()
         )
         jointMesh.material.color.copy(jointColor)
@@ -108,7 +114,7 @@ boneHand = (hand) ->
         jointMeshes.push jointMesh
 
       jointMesh = new THREE.Mesh(
-        new THREE.SphereGeometry(jointSize),
+        new THREE.SphereGeometry(jointRadius, 32, 32),
         new THREE.MeshPhongMaterial()
       )
       jointMesh.material.color.copy(jointColor)
@@ -156,11 +162,20 @@ boneHandLost = (hand) ->
 
 Leap.plugin 'boneHand', (scope = {}) ->
 
+  scope.boneScale  && boneScale  = scope.boneScale
+  scope.jointScale && jointScale = scope.jointScale
+
+  scope.boneColor  && boneColor  = scope.boneColor
+  scope.jointColor && jointColor = scope.jointColor
+
   @use('handEntry')
   @use('handHold')
 
-  console.assert(scope.targetEl)
-  initScene(scope.targetEl)
+  if scope.scene
+    scene = scope.scene
+  else
+    console.assert(scope.targetEl)
+    initScene(scope.targetEl)
 
   @on 'handLost', boneHandLost
 
