@@ -73,6 +73,8 @@ boneScale  = 1 / 6
 jointScale = 1 / 5
 
 boneHand = (hand) ->
+  return if !scope.scene
+
   hand.fingers.forEach (finger) ->
 
     # the handFound listener doesn't actually fire if in live mode with hand-in-screen
@@ -160,7 +162,9 @@ boneHandLost = (hand) ->
   hand.data('armMesh', null);
 
 
-Leap.plugin 'boneHand', (scope = {}) ->
+Leap.plugin 'boneHand', (options = {}) ->
+  # make sure scope is globally available
+  scope = options
 
   scope.boneScale  && boneScale  = scope.boneScale
   scope.jointScale && jointScale = scope.jointScale
@@ -171,9 +175,8 @@ Leap.plugin 'boneHand', (scope = {}) ->
   @use('handEntry')
   @use('handHold')
 
-  if scope.scene
-    scene = scope.scene
-  else
+  # this allows a null scene to be passed in for delayed-initialization.
+  if scope.scene == undefined
     console.assert(scope.targetEl)
     initScene(scope.targetEl)
 
