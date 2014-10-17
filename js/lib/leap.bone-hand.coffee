@@ -86,6 +86,13 @@ boneHand = (hand) ->
       boneMeshes = []
       jointMeshes = []
 
+      material = if !isNaN(scope.opacity)
+        new THREE.MeshPhongMaterial(transparent: true, opacity: scope.opacity)
+      else
+        new THREE.MeshPhongMaterial()
+
+
+
       unless finger.bones
         console.warn("error, no bones on", hand.id)
         return
@@ -101,7 +108,7 @@ boneHand = (hand) ->
         # CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded)
         boneMesh = new THREE.Mesh(
           new THREE.CylinderGeometry(boneRadius, boneRadius, bone.length, 32),
-          new THREE.MeshPhongMaterial()
+          material.clone()
         )
         boneMesh.material.color.copy(boneColor)
         scope.scene.add boneMesh
@@ -109,15 +116,15 @@ boneHand = (hand) ->
 
         jointMesh = new THREE.Mesh(
           new THREE.SphereGeometry(jointRadius, 32, 32),
-          new THREE.MeshPhongMaterial()
+          material.clone()
         )
         jointMesh.material.color.copy(jointColor)
-        scene.add jointMesh
+        scope.scene.add jointMesh
         jointMeshes.push jointMesh
 
       jointMesh = new THREE.Mesh(
         new THREE.SphereGeometry(jointRadius, 32, 32),
-        new THREE.MeshPhongMaterial()
+        material.clone()
       )
       jointMesh.material.color.copy(jointColor)
       scope.scene.add jointMesh
@@ -145,6 +152,7 @@ boneHandLost = (hand) ->
   hand.fingers.forEach (finger) ->
     boneMeshes = finger.data("boneMeshes")
     jointMeshes = finger.data("jointMeshes")
+
 
     return unless boneMeshes
 
