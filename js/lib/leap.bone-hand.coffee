@@ -1,8 +1,8 @@
-scene = null
+scope = null
 
 initScene = (targetEl)->
-  scene = scene = new THREE.Scene()
-  renderer = new THREE.WebGLRenderer({
+  scope.scene = new THREE.Scene()
+  scope.renderer = renderer = new THREE.WebGLRenderer({
     alpha: true
   })
 
@@ -18,25 +18,25 @@ initScene = (targetEl)->
 
   directionalLight = directionalLight = new THREE.DirectionalLight( 0xffffff, 1 )
   directionalLight.position.set( 0, 0.5, 1 )
-  scene.add(directionalLight)
+  scope.scene.add(directionalLight)
 
   directionalLight = directionalLight = new THREE.DirectionalLight( 0xffffff, 1 )
   directionalLight.position.set( 0.5, -0.5, -1 )
-  scene.add(directionalLight)
+  scope.scene.add(directionalLight)
 
   directionalLight = directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 )
   directionalLight.position.set( -0.5, 0, -0.2 )
-  scene.add(directionalLight)
+  scope.scene.add(directionalLight)
 
-  camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000)
+  scope.camera = camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000)
 
   camera.position.fromArray([0, 300, 500]);
   camera.lookAt(new THREE.Vector3(0, 160, 0));
 
 
-  scene.add(camera)
+  scope.scene.add(camera)
 
-  renderer.render(scene, camera)
+  renderer.render(scope.scene, camera)
 
 
   window.addEventListener 'resize', ->
@@ -48,11 +48,11 @@ initScene = (targetEl)->
 
     renderer.setSize( width, height )
 
-    renderer.render(scene, camera)
+    renderer.render(scope.scene, camera)
   , false
 
   render = ->
-    renderer.render(scene, camera);
+    renderer.render(scope.scene, camera);
     window.requestAnimationFrame(render);
 
   render()
@@ -102,7 +102,7 @@ boneHand = (hand) ->
           new THREE.MeshPhongMaterial()
         )
         boneMesh.material.color.copy(boneColor)
-        scene.add boneMesh
+        scope.scene.add boneMesh
         boneMeshes.push boneMesh
 
         jointMesh = new THREE.Mesh(
@@ -118,7 +118,7 @@ boneHand = (hand) ->
         new THREE.MeshPhongMaterial()
       )
       jointMesh.material.color.copy(jointColor)
-      scene.add jointMesh
+      scope.scene.add jointMesh
       jointMeshes.push jointMesh
 
       finger.data "boneMeshes", boneMeshes
@@ -147,16 +147,16 @@ boneHandLost = (hand) ->
     return unless boneMeshes
 
     boneMeshes.forEach (mesh) ->
-      scene.remove mesh
+      scope.scene.remove mesh
 
     jointMeshes.forEach (mesh) ->
-      scene.remove mesh
+      scope.scene.remove mesh
 
     finger.data(boneMeshes: null)
     finger.data(jointMeshes: null)
 
   armMesh = hand.data('armMesh');
-  scene.remove(armMesh);
+  scope.scene.remove(armMesh);
   hand.data('armMesh', null);
 
 
