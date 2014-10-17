@@ -72,8 +72,14 @@ boneColor = (new THREE.Color).setHex(0xffffff)
 boneScale  = 1 / 6
 jointScale = 1 / 5
 
+boneRadius = null
+jointRadius = null
+
+material = null
+
 boneHand = (hand) ->
   return if !scope.scene
+
 
   hand.fingers.forEach (finger) ->
 
@@ -92,13 +98,12 @@ boneHand = (hand) ->
         new THREE.MeshPhongMaterial()
 
 
+      boneRadius  = hand.middleFinger.proximal.length * boneScale
+      jointRadius = hand.middleFinger.proximal.length * jointScale
 
       unless finger.bones
         console.warn("error, no bones on", hand.id)
         return
-
-      boneRadius  = hand.middleFinger.proximal.length / 6
-      jointRadius = hand.middleFinger.proximal.length / 5
 
       finger.bones.forEach (bone) ->
 
@@ -148,6 +153,67 @@ boneHand = (hand) ->
         mesh.position.fromArray bone.nextJoint
 
 
+  if scope.arm
+    armMesh = hand.data('armMesh')
+
+    unless armMesh
+      armMesh = new THREE.Object3D;
+      scope.scene.add(armMesh);
+      hand.data('armMesh', armMesh);
+
+      boneXOffset = (hand.arm.width / 2) - (boneRadius / 2)
+      halfArmLength = hand.arm.length / 2
+
+      armBones = []
+      for i in [0..3]
+        armBones.push(new THREE.Mesh(
+          # CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded)
+          new THREE.CylinderGeometry(boneRadius, boneRadius,
+            ( if  i < 2 then hand.arm.length else hand.arm.width )
+          , 32),
+          material.clone()
+        ))
+        armBones[i].material.color.copy(boneColor)
+        armMesh.add(armBones[i])
+
+      # CW from Top center
+      armBones[0].position.setX(boneXOffset) # radius
+      armBones[1].position.setX(-boneXOffset) # ulna
+      armBones[2].position.setY(halfArmLength)
+      armBones[3].position.setY(-halfArmLength)
+      armTopAndBottomRotation = (new THREE.Quaternion).setFromEuler(
+        new THREE.Euler(0, 0, Math.PI / 2)
+      );
+
+      armBones[2].quaternion.multiply(armTopAndBottomRotation)
+      armBones[3].quaternion.multiply(armTopAndBottomRotation)
+
+      armBones = []
+      for i in [0..3]
+        armBones.push(new THREE.Mesh(
+          new THREE.SphereGeometry(jointRadius, 32, 32),
+          material.clone()
+        ))
+        armBones[i].material.color.copy(jointColor)
+        armMesh.add(armBones[i])
+
+      # CW from TL
+      armBones[0].position.set( - boneXOffset,   halfArmLength, 0)
+      armBones[1].position.set(   boneXOffset,   halfArmLength, 0)
+      armBones[2].position.set(   boneXOffset, - halfArmLength, 0)
+      armBones[3].position.set( - boneXOffset, - halfArmLength, 0)
+
+
+    armMesh.position.fromArray(hand.arm.center());
+
+    armMesh.setRotationFromMatrix(
+      (new THREE.Matrix4).fromArray( hand.arm.matrix() ) # does this get transformed?
+    );
+    armMesh.quaternion.multiply(baseBoneRotation);
+
+
+
+
 boneHandLost = (hand) ->
   hand.fingers.forEach (finger) ->
     boneMeshes = finger.data("boneMeshes")
@@ -165,9 +231,10 @@ boneHandLost = (hand) ->
     finger.data(boneMeshes: null)
     finger.data(jointMeshes: null)
 
-  armMesh = hand.data('armMesh');
-  scope.scene.remove(armMesh);
-  hand.data('armMesh', null);
+  if scope.arm
+    armMesh = hand.data('armMesh');
+    scope.scene.remove(armMesh);
+    hand.data('armMesh', null);
 
 
 Leap.plugin 'boneHand', (options = {}) ->
