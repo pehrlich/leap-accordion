@@ -29,6 +29,15 @@ function (teoria, sc, KeyboardJS, createjs, ChromaticKeyboard, Key, LAYOUT_BL, L
   // Class methods
   Bayan.keyForEvent = function(e) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
+
+    if ( navigator.userAgent.search("Firefox") > 0 ) {
+      // See https://github.com/RobertWHurst/KeyboardJS/issues/49
+
+      if (keyCode === 59)  keyCode = 186; // ;
+      if (keyCode === 173) keyCode = 189; // -
+
+    }
+
     var names = KeyboardJS.key.name(keyCode);
     return names[names.length - 1];
   }
